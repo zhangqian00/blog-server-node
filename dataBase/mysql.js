@@ -1,28 +1,24 @@
 const mysql = require('mysql');
 const config = require('../config/default.js');
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({ // 连接池
 	host: config.database.HOST,
 	user: config.database.USERNAME,
 	password: config.database.PASSWORD,
-	database: config.database.DATABASE
+	database: config.database.DATABASE,
+	multipleStatements: true // 支持执行多条sql
 });
 
-exports.blogList = (sql,params,cb)=>{
-	connection.connect();
-
-	connection.query(sql,(err,data)=>{
+exports.blogList = (sql,cb)=>{ // 查询博客列表
+	pool.getConnection((err,conn)=>{
 		if(err){
-			console.log(err);
-			throw err;
+			cb(err,null,null);
+			return;
 		}
-		cb(data);
-	});
-	connection.end((err)=>{
-		if(err){
-			console.log('关闭数据库连接失败！');
-			throw err;
-		}
+		conn.query(sql,(qerr,data)=>{
+			conn.release(); // 释放连接
+			cb(qerr,JSON.parse(JSON.stringify(data)));
+		});
 	});
 };
 

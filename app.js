@@ -1,13 +1,8 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const router = require('./router/router.js'); // 路由文件
-// const cors = require('cors');
 const app = express();
-
-// app.use(cors({
-//     origin:['http://localhost:8081'],
-//     methods:['GET','POST'],
-//     alloweHeaders:['Conten-Type', 'Authorization']
-// }));
+app.use(bodyParser.urlencoded({extended:true}));
 app.all('*',(req,res,next)=>{
 	res.header("Access-Control-Allow-Origin", "*");  
     res.header("Access-Control-Allow-Headers", "X-Requested-With");  
