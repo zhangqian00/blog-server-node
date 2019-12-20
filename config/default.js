@@ -2,8 +2,8 @@ const config = {
 	port: 3306,
 	database: {
 		DATABASE: 'myblog',
-		USERNAME: 'zhq',
-		PASSWORD: 'abc123~!',
+		USERNAME: 'root',
+		PASSWORD: '123456',
 		HOST: 'localhost'
 	}
 };
