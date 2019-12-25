@@ -19,13 +19,13 @@ exports.getBlogList = (req,res)=>{ // 获取博客列表
 		res.send(temp);
 		return;
 	}
-	let sql = `SELECT @rownum:=@rownum+1 rownumber,id keyid,title,author,keywords,coversrc,blogtags,createdate
+	let sql = `SELECT @rownum:=@rownum+1 rownumber,id keyid,title,author,keywords,coversrc,blogtags,createdate,fbzt,blogtype
 			FROM blog_list,(select @rownum:=0) r
 			${blogtitle?"where title like '%"+blogtitle+"%'":""} 
 			limit ${(curPage-1)*pagesize},${pagesize};
 			select count(1) total FROM blog_list
 			${blogtitle?"where title like '%"+blogtitle+"%'":""};`;
-			console.log(sql)
+			// console.log(sql)
 	db.blogList(sql,(err,data)=>{
 		if(err){
 			console.log('blogList:---'+err);

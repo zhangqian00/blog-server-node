@@ -22,4 +22,17 @@ exports.blogList = (sql,cb)=>{ // 查询博客列表
 	});
 };
 
+exports.createBlog = (sql,cb)=>{ // 创建博客
+	pool.getConnection((err,coon)=>{
+		if(err){
+			cb(err,null,null);
+			return;
+		}
+		conn.query(sql,(qerr,data)=>{
+			conn.release();
+			cb(qerr,JSON.parse(JSON.stringify(data)));
+		});
+	});
+};
+
 
