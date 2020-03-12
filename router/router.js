@@ -4,8 +4,12 @@ const testApi = require('../controller/test.js');
 const blogListCtrl = require('../controller/blogList.js');
 const addBlogCtrl = require('../controller/addBlog.js');
 
-router.get('/api/test',testApi.test1); // 测试
-router.post('/api/blogList',blogListCtrl.getBlogList); // 获取博客列表
-router.post('/api/addBlog',addBlogCtrl.addBlog); // 提交博客
+// 管理端
+router.get('/adminApi/test',testApi.test1); // 测试
+router.post('/adminApi/blogList',blogListCtrl.getBlogList); // 获取博客列表
+router.post('/adminApi/addBlog',addBlogCtrl.addBlog); // 提交博客
+
+// 用户端
+router.post('/api/blogList',blogListCtrl.userBloglist); // 获取博客列表
 
 module.exports = router;
