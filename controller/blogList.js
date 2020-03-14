@@ -23,7 +23,7 @@ exports.getBlogList = (req,res)=>{ // 后台获取博客列表
 			FROM blog_list,(select @rownum:=0) r
 			${blogtitle?"where title like '%"+blogtitle+"%'":""} 
 			ORDER BY createdate desc
-			limit ${(curPage-1)*pagesize},${pagesize};
+			limit ${(curPage-1)*pagesize},${curpage*pagesize};
 			select count(1) total FROM blog_list
 			${blogtitle?"where title like '%"+blogtitle+"%'":""};`;
 			console.log(sql)
@@ -47,9 +47,9 @@ exports.getBlogList = (req,res)=>{ // 后台获取博客列表
 };
 
 exports.userBloglist = (req,res)=>{ // 前台获取博客列表
-	let curPage = req.body.pageindex; // 第几页
+	let curpage = req.body.pageindex; // 第几页
 	let pagesize = req.body.pagesize; // 每页显示条数
-	if(!curPage||!pagesize){ // 缺少参数
+	if(!curpage||!pagesize){ // 缺少参数
 		let temp = {
 			DataContext: {
 				result: null,
@@ -64,8 +64,8 @@ exports.userBloglist = (req,res)=>{ // 前台获取博客列表
 		return;
 	}
 	let sql = `select id,title,coversrc,createdate from blog_list
-			WHERE fbzt='1' ORDER BY createdate desc limit ${(curpage-1)*pagesize},${pagesize};
-			select count(1) total from blog_list `;
+			WHERE fbzt='1' ORDER BY createdate desc limit ${(curpage-1)*pagesize},${curpage*pagesize};
+			select count(1) total from blog_list where fbzt='1';`;
 	db.blogList(sql,(err,data)=>{
 		if(err){
 			console.log('blogList--'+err);
