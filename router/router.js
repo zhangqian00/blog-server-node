@@ -11,5 +11,6 @@ router.post('/adminApi/addBlog',addBlogCtrl.addBlog); // 提交博客
 
 // 用户端
 router.post('/api/blogList',blogListCtrl.userBloglist); // 获取博客列表
+router.post('/api/blogDetail',blogListCtrl.userBlogDetail); // 获取博客详情
 
 module.exports = router;

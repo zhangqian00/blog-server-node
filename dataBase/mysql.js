@@ -35,4 +35,16 @@ exports.createBlog = (sql,cb)=>{ // 创建博客
 	});
 };
 
+exports.getUserBlogDetail = (sql,cb)=>{
+	pool.getConnection((err,conn)=>{
+		if(err){
+			cb(err,null);
+			return;
+		}
+		conn.query(sql,(qerr,data)=>{
+			conn.release(); // 释放连接
+			cb(qerr,data);
+		})
+	})
+};
 

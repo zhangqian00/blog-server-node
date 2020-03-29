@@ -14,6 +14,6 @@ app.all('*',(req,res,next)=>{
 
 app.use(router); // 挂载路由
 
-app.listen(3000,()=>{
-	console.log('listening on port 3000');
+app.listen(3001,()=>{
+	console.log('listening on port 3001');
 });

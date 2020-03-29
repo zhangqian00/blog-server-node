@@ -84,3 +84,33 @@ exports.userBloglist = (req,res)=>{ // 前台获取博客列表
 		res.send(temp);
 	});
 };
+
+exports.userBlogDetail = (req,res)=>{ // 前台获取博客详情
+	let id = req.body.keyid;
+	if(!id){ // 缺少参数
+		let temp = {
+			DataContext: null,
+			ErrorCode: {
+				Code: 10003,
+				Message: '缺少参数'
+			}
+		};
+		res.send(temp);
+		return;
+	}
+	let sql = `select id keyid,title,author,blogtags,createdate,blogcontent content from blog_list WHERE id=${id}`;
+	db.getUserBlogDetail(sql,(err,data)=>{
+		if(err){
+			console.log('userBlogDetail--'+err);
+			throw err;
+		}
+		let temp = {
+			DataContext: data[0]||{},
+			ErrorCode: {
+				Code: 0,
+				Message: 'success'
+			}
+		}
+		res.send(temp);
+	});
+};
